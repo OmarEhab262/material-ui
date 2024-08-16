@@ -1,4 +1,12 @@
-import { Create, Home, Logout, Person2, Settings } from "@mui/icons-material";
+import {
+  Brightness3,
+  Create,
+  Home,
+  Logout,
+  Person2,
+  Settings,
+  WbSunny,
+} from "@mui/icons-material";
 import {
   Divider,
   Drawer,
@@ -7,11 +15,24 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Toolbar,
 } from "@mui/material";
+import { orange } from "@mui/material/colors";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+// import { useState, useEffect } from "react";
+DrawerComponent.propTypes = {
+  setTriggerMode: PropTypes.func.isRequired,
+  triggerMode: PropTypes.string.isRequired,
+};
+const DrawerComponent = ({ setTriggerMode, triggerMode }) => {
+  const handleChangeMode = () => {
+    if (triggerMode === "light") {
+      setTriggerMode("dark");
+    } else {
+      setTriggerMode("light");
+    }
+  };
 
-const DrawerComponent = () => {
   return (
     <Drawer
       sx={{
@@ -25,7 +46,23 @@ const DrawerComponent = () => {
       variant="permanent"
       anchor="left"
     >
-      <Toolbar />
+      <div className="flex justify-center items-center h-[100px]">
+        {triggerMode === "light" ? (
+          <WbSunny
+            className="cursor-pointer"
+            fontSize="large"
+            sx={{ color: orange[400] }}
+            onClick={handleChangeMode}
+          />
+        ) : (
+          <Brightness3
+            className="cursor-pointer"
+            fontSize="large"
+            onClick={handleChangeMode}
+          />
+        )}
+      </div>
+
       <Divider />
       <List>
         <ListItem disablePadding>
@@ -72,4 +109,5 @@ const DrawerComponent = () => {
     </Drawer>
   );
 };
+
 export default DrawerComponent;
