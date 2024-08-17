@@ -1,7 +1,17 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, IconButton, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Paper,
+  Typography,
+  useTheme,
+} from "@mui/material";
 
 const Home = () => {
+  const theme = useTheme(); // Access the theme to use custom colors
+  console.log("theme: ", theme.palette.omar);
+
   return (
     <Box>
       <Paper
@@ -16,6 +26,18 @@ const Home = () => {
           <Typography variant="h5" className="pr-2 text-gray-500">
             $100
           </Typography>
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: theme.palette.omar.main,
+              color: theme.palette.omar.text.primary,
+              "&:hover": {
+                bgcolor: theme.palette.omar.text.secondary,
+              },
+            }}
+          >
+            Buy Now
+          </Button>
         </Box>
       </Paper>
     </Box>

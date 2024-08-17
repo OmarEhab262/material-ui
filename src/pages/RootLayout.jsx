@@ -1,17 +1,41 @@
 import { Outlet } from "react-router-dom";
-import Nav from "../components/Nav";
-// import Drawer from "../components/Drawer";
-import DrawerComponent from "../components/Drawer";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { Box, createTheme, ThemeProvider } from "@mui/material";
+import { brown } from "@mui/material/colors";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useState } from "react";
-// const mode = localStorage.getItem("mode");
+import DrawerComponent from "../components/Drawer";
+import Nav from "../components/Nav";
 
 const RootLayout = () => {
-  const [triggerMode, setTriggerMode] = useState("light");
+  const [open, setOpen] = useState(false);
+  const [triggerMode, setTriggerMode] = useState(
+    localStorage.getItem("mode") || "light"
+  );
+
   const darkTheme = createTheme({
     palette: {
       mode: triggerMode,
+      ...(triggerMode === "light"
+        ? {
+            omar: {
+              main: brown[100],
+              divider: brown[200],
+              text: {
+                primary: brown[800],
+                secondary: brown[200],
+              },
+            },
+          }
+        : {
+            omar: {
+              main: brown[800],
+              divider: brown[700],
+              text: {
+                primary: brown[100],
+                secondary: brown[700],
+              },
+            },
+          }),
     },
   });
 
@@ -19,14 +43,22 @@ const RootLayout = () => {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <div className="root-layout">
-        <Nav />
+        <Nav setOpen={setOpen} open={open} />
         <DrawerComponent
           setTriggerMode={setTriggerMode}
           triggerMode={triggerMode}
+          setOpen={setOpen}
+          open={open}
         />
-        <div className="mt-[50px] ml-[240px] w-[calc(100%-240px)] flex justify-center ">
+        <Box
+          sx={{
+            ml: { xs: 0, md: "240px" },
+            width: { xs: "100%", md: "calc(100% - 240px)" },
+          }}
+          className="mt-[50px] flex justify-center"
+        >
           <Outlet />
-        </div>
+        </Box>
       </div>
     </ThemeProvider>
   );

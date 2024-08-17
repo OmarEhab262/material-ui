@@ -15,26 +15,34 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  useTheme,
 } from "@mui/material";
 import { orange } from "@mui/material/colors";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-// import { useState, useEffect } from "react";
-DrawerComponent.propTypes = {
-  setTriggerMode: PropTypes.func.isRequired,
-  triggerMode: PropTypes.string.isRequired,
-};
-const DrawerComponent = ({ setTriggerMode, triggerMode }) => {
+
+const DrawerComponent = ({ setTriggerMode, triggerMode, setOpen, open }) => {
+  const theme = useTheme();
+  const location = useLocation();
+
   const handleChangeMode = () => {
-    if (triggerMode === "light") {
-      setTriggerMode("dark");
-    } else {
-      setTriggerMode("light");
-    }
+    const newMode = theme.palette.mode === "light" ? "dark" : "light";
+    localStorage.setItem("mode", newMode);
+    setTriggerMode(newMode);
   };
+
+  const menuItems = [
+    { text: "Home", icon: <Home />, path: "/" },
+    { text: "Create", icon: <Create />, path: "/create" },
+    { text: "Profile", icon: <Person2 />, path: "/profile" },
+    { text: "Settings", icon: <Settings />, path: "/settings" },
+    { text: "Logout", icon: <Logout />, path: "/logout" },
+  ];
 
   return (
     <Drawer
+      open={open}
+      onClose={() => setOpen(false)}
       sx={{
         width: "240px",
         flexShrink: 0,
@@ -43,7 +51,7 @@ const DrawerComponent = ({ setTriggerMode, triggerMode }) => {
           boxSizing: "border-box",
         },
       }}
-      variant="permanent"
+      variant="temporary"
       anchor="left"
     >
       <div className="flex justify-center items-center h-[100px]">
@@ -65,49 +73,36 @@ const DrawerComponent = ({ setTriggerMode, triggerMode }) => {
 
       <Divider />
       <List>
-        <ListItem disablePadding>
-          <ListItemButton component={Link} to="/">
-            <ListItemIcon>
-              <Home />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton component={Link} to="/create">
-            <ListItemIcon>
-              <Create />
-            </ListItemIcon>
-            <ListItemText primary="Create" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton component={Link} to="/profile">
-            <ListItemIcon>
-              <Person2 />
-            </ListItemIcon>
-            <ListItemText primary="Profile" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton component={Link} to="/settings">
-            <ListItemIcon>
-              <Settings />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton component={Link} to="/logout">
-            <ListItemIcon>
-              <Logout />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </ListItemButton>
-        </ListItem>
+        {menuItems.map((item) => (
+          <ListItem key={item.text} disablePadding>
+            <ListItemButton
+              component={Link}
+              to={item.path}
+              sx={{
+                backgroundColor:
+                  location.pathname === item.path
+                    ? triggerMode === "light"
+                      ? theme.palette.grey[300]
+                      : theme.palette.grey[800]
+                    : "inherit",
+              }}
+              onClick={() => setOpen(false)} // Close drawer when clicking on a menu item
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </Drawer>
   );
+};
+
+DrawerComponent.propTypes = {
+  setTriggerMode: PropTypes.func.isRequired,
+  triggerMode: PropTypes.string.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
 export default DrawerComponent;
