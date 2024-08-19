@@ -5,6 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { useState } from "react";
 import DrawerComponent from "../components/Drawer";
 import Nav from "../components/Nav";
+import ScrollToTop from "../components/ScrollToTop";
 
 const RootLayout = () => {
   const [open, setOpen] = useState(false);
@@ -42,6 +43,7 @@ const RootLayout = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
+      <ScrollToTop />
       <div className="root-layout">
         <Nav setOpen={setOpen} open={open} />
         <DrawerComponent

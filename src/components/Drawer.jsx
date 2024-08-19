@@ -16,14 +16,16 @@ import {
   ListItemIcon,
   ListItemText,
   useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { orange } from "@mui/material/colors";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const DrawerComponent = ({ setTriggerMode, triggerMode, setOpen, open }) => {
   const theme = useTheme();
   const location = useLocation();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md")); // Check if screen size is small or below
 
   const handleChangeMode = () => {
     const newMode = theme.palette.mode === "light" ? "dark" : "light";
@@ -36,9 +38,14 @@ const DrawerComponent = ({ setTriggerMode, triggerMode, setOpen, open }) => {
     { text: "Create", icon: <Create />, path: "/create" },
     { text: "Profile", icon: <Person2 />, path: "/profile" },
     { text: "Settings", icon: <Settings />, path: "/settings" },
-    { text: "Logout", icon: <Logout />, path: "/logout" },
   ];
-
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setOpen(false);
+    navigate("/login");
+    window.location.reload(); // Refresh the page to update the user status
+  };
   return (
     <Drawer
       open={open}
@@ -51,7 +58,7 @@ const DrawerComponent = ({ setTriggerMode, triggerMode, setOpen, open }) => {
           boxSizing: "border-box",
         },
       }}
-      variant="temporary"
+      variant={isSmallScreen ? "temporary" : "permanent"} // Switch variant based on screen size
       anchor="left"
     >
       <div className="flex justify-center items-center h-[100px]">
@@ -93,6 +100,14 @@ const DrawerComponent = ({ setTriggerMode, triggerMode, setOpen, open }) => {
             </ListItemButton>
           </ListItem>
         ))}
+        <ListItem disablePadding>
+          <ListItemButton
+            onClick={handleLogout} // Handle logout
+          >
+            <ListItemIcon>{<Logout />}</ListItemIcon>
+            <ListItemText primary={"Logout"} />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Drawer>
   );

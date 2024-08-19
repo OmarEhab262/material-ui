@@ -2,6 +2,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
   Avatar,
+  Badge,
   Box,
   IconButton,
   Link,
@@ -9,12 +10,23 @@ import {
   Typography,
 } from "@mui/material";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const Nav = ({ setOpen, open }) => {
   const handelBtn = () => {
     setOpen(!open); // Toggle the drawer open/close state
     console.log("open: ", open);
   };
+  //   useEffect(() => {
+  //     console.log(name?.card.length);
+  //   }, [name]);
+
+  const name = useSelector((state) => state.user.user);
+  const value = useSelector((state) => state.user.card);
+  const valuee = useSelector((state) => state.user.value);
+  console.log("valuee: ", valuee);
+  console.log("value: ", value);
 
   return (
     <Box sx={{ ml: { xs: 0, md: "240px" } }}>
@@ -43,8 +55,10 @@ const Nav = ({ setOpen, open }) => {
               My expenses
             </Link>
 
-            <Typography sx={{ mr: "10px" }}>Omar Ehab</Typography>
-            <Avatar alt="User Avatar" src="/" />
+            <Typography sx={{ mr: "10px" }}>{name.name}</Typography>
+            <Badge badgeContent={valuee} color="success">
+              <Avatar alt="User Avatar" src="/" />
+            </Badge>
           </Toolbar>
         </AppBar>
       </Box>

@@ -1,0 +1,41 @@
+{
+  "users": [
+    {
+      "id": "f852",
+      "email": "john.doe@example.com",
+      "password": "password123",
+      "name": "John Doe",
+      "card": []
+    },
+    {
+      "id": "fd852",
+      "email": "jane.smith@example.com",
+      "password": "securepass456",
+      "name": "Jane Smith",
+      "card": []
+    },
+    {
+      "id": "dsfdasfa4544",
+      "email": "omar",
+      "password": "omar1234",
+      "name": "Omar Ehab",
+      "card": [
+        {
+          "id": "fc84235a-1fc8-40f0-8d03-955f3547425b",
+          "name": "fads",
+          "price": "445"
+        },
+        {
+          "id": "633f034d-836d-46b5-a197-1574d80623ef",
+          "name": "fda",
+          "price": "511"
+        },
+        {
+          "id": "e876de82-0376-4d5e-942a-299b6c4796dc",
+          "name": "daf",
+          "price": "44"
+        }
+      ]
+    }
+  ]
+}
