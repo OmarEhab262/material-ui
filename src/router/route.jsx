@@ -7,7 +7,6 @@ import Create from "../pages/Create";
 import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 import RootLayout from "../pages/RootLayout";
-import Settings from "../pages/Settings";
 import ProtectedRoute from "../auth/ProtectedRoute";
 import Login from "../pages/Login";
 const isLogin = !!localStorage.getItem("user");
@@ -29,14 +28,6 @@ const router = createBrowserRouter(
           element={
             <ProtectedRoute isLogged={isLogin} redirectPath="/login">
               <Create />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="settings"
-          element={
-            <ProtectedRoute isLogged={isLogin} redirectPath="/login">
-              <Settings />
             </ProtectedRoute>
           }
         />

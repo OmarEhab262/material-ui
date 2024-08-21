@@ -5,6 +5,7 @@
       "email": "john.doe@example.com",
       "password": "password123",
       "name": "John Doe",
+      "img": "",
       "card": [
         {
           "id": "471a9476-025f-4934-ac7a-b619717a38ca",
@@ -15,23 +16,19 @@
     },
     {
       "id": "fd852",
-      "email": "jane.smith@example.com",
-      "password": "securepass456",
       "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "password": "securepass4567",
+      "img": "https://avatar.iran.liara.run/public/50",
       "card": []
     },
     {
       "id": "dsfdasfa4544",
-      "email": "omar",
-      "password": "omar1234",
       "name": "Omar Ehab",
-      "card": [
-        {
-          "id": "50b416fb-9f71-4155-a3a8-0c53cbf647c5",
-          "name": "omar55",
-          "price": "5555"
-        }
-      ]
+      "email": "omar@gmail.com",
+      "password": "omar1234",
+      "img": "https://avatar.iran.liara.run/public/boy?username=Ash",
+      "card": []
     }
   ]
 }

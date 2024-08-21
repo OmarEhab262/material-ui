@@ -86,23 +86,12 @@ const Create = () => {
     mutation.mutate(transactionData);
   };
 
-  const userIddasfd = useSelector((state) => state.user.card); // Get the user ID from Redux state
-  const handleo = () => {
-    console.log("userIddasfd: ", userIddasfd);
-    const dfadfa = localStorage.getItem("user");
-    console.log("dfadfa: ", JSON.parse(dfadfa));
-    console.log("dfadfa: ", JSON.parse(dfadfa).card);
-  };
-
   return (
     <Box
       component={"form"}
       onSubmit={handleSubmit}
       className="md:w-[500px] w-full flex flex-col gap-10 items-center justify-center"
     >
-      <Button variant="contained" onClick={handleo}>
-        gaadfsfds
-      </Button>
       <TextField
         name="title"
         fullWidth

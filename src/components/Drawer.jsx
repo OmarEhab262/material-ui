@@ -4,7 +4,6 @@ import {
   Home,
   Logout,
   Person2,
-  Settings,
   WbSunny,
 } from "@mui/icons-material";
 import {
@@ -37,7 +36,6 @@ const DrawerComponent = ({ setTriggerMode, triggerMode, setOpen, open }) => {
     { text: "Home", icon: <Home />, path: "/" },
     { text: "Create", icon: <Create />, path: "/create" },
     { text: "Profile", icon: <Person2 />, path: "/profile" },
-    { text: "Settings", icon: <Settings />, path: "/settings" },
   ];
   const navigate = useNavigate();
   const handleLogout = () => {
