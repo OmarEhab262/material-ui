@@ -1,11 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-const nn = JSON.parse(localStorage.getItem("user"));
+
+// Safely retrieve user data from localStorage
+const storedUser = localStorage.getItem("user");
+const nn = storedUser ? JSON.parse(storedUser) : {}; // Fallback to an empty object if user is null
 console.log("card: ", nn.card);
+
 const initialState = {
-  user: JSON.parse(localStorage.getItem("user")) || {},
-  isLoggedIn: !!localStorage.getItem("user"),
-  value: 0,
-  card: nn.card || 0,
+  user: nn, // Use the parsed user object or empty object if not present
+  isLoggedIn: !!storedUser, // Check if the user exists in localStorage
+  value: nn.card ? nn.card.length : 0, // Initialize the value based on card length
+  card: nn.card || [], // Fallback to an empty array if card doesn't exist
 };
 
 export const userSlice = createSlice({
@@ -13,15 +17,15 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     addCard: (state, action) => {
-      state.card.push(action);
-      state.value = state.value + 1;
+      state.card.push(action.payload); // Ensure you push action.payload, not the entire action
+      state.value = state.card.length; // Update the value based on the card array length
     },
 
     deleteCard: (state, action) => {
       const idToRemove = action.payload;
       console.log("idToRemove: ", idToRemove);
       state.card = state.card.filter((item) => item.id !== idToRemove);
-      state.value = state.value - 1;
+      state.value = state.card.length; // Update the value based on the updated card array length
     },
   },
 });

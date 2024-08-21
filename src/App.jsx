@@ -4,15 +4,15 @@ import "./App.css";
 // import MuiTypography from "./components/MuiTypography";
 // import MuiTextField from "./components/MuiTextField";
 import router from "./router/route";
-
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 function App() {
   return (
     <>
       {/* <MuiTypography /> */}
       {/* <MuiButton /> */}
       {/* <MuiTextField /> */}
-
       <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
     </>
   );
 }

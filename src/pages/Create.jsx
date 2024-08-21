@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@mui/material";
 import { purple } from "@mui/material/colors";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
@@ -30,7 +30,7 @@ const ColorButton = styled(
 const Create = () => {
   const navigate = useNavigate();
   const userId = useSelector((state) => state.user.user?.id); // Get the user ID from Redux state
-
+  const queryClient = useQueryClient();
   const updateUserCard = async (data) => {
     // Fetch the current user data
     const userResponse = await axios.get(
@@ -63,6 +63,7 @@ const Create = () => {
     onSuccess: () => {
       // Handle success, e.g., show a success message
       console.log("Card added successfully!");
+      queryClient.invalidateQueries("user");
       navigate("/");
     },
     onError: (error) => {

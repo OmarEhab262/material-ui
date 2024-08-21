@@ -10,24 +10,28 @@ import {
   Typography,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
+import axiosUser from "../config/axiosUser";
 
 const Nav = ({ setOpen, open }) => {
+  const userId = useSelector((state) => state.user.user?.id);
+  const name = useSelector((state) => state.user.user);
+
   const handelBtn = () => {
     setOpen(!open); // Toggle the drawer open/close state
     console.log("open: ", open);
   };
-  //   useEffect(() => {
-  //     console.log(name?.card.length);
-  //   }, [name]);
-
-  const name = useSelector((state) => state.user.user);
-  const value = useSelector((state) => state.user.card);
-  const valuee = useSelector((state) => state.user.value);
-  console.log("valuee: ", valuee);
-  console.log("value: ", value);
-
+  const fetchUserData = async (userId) => {
+    const response = await axiosUser.get(`/users/${userId}`);
+    return response.data;
+  };
+  const { data } = useQuery(["user", userId], () => fetchUserData(userId), {
+    enabled: !!userId, // Fetch data only if userId is available
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+  const value = data?.card.length;
   return (
     <Box sx={{ ml: { xs: 0, md: "240px" } }}>
       <Box sx={{ flexGrow: 1 }}>
@@ -56,7 +60,7 @@ const Nav = ({ setOpen, open }) => {
             </Link>
 
             <Typography sx={{ mr: "10px" }}>{name.name}</Typography>
-            <Badge badgeContent={valuee} color="success">
+            <Badge badgeContent={value} color="success">
               <Avatar alt="User Avatar" src="/" />
             </Badge>
           </Toolbar>

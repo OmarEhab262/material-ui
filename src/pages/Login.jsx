@@ -1,7 +1,14 @@
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Alert,
   Box,
   Button,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  Input,
+  InputAdornment,
+  InputLabel,
   Snackbar,
   TextField,
   Typography,
@@ -68,6 +75,13 @@ const Login = () => {
     }
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   return (
     <Box className="flex flex-col justify-center items-center p-5">
       <Typography variant="h3">Welcome to our app! Please log in.</Typography>
@@ -98,7 +112,7 @@ const Login = () => {
             </Typography>
           }
         />
-        <TextField
+        {/* <TextField
           required={!!errors.password}
           error={!!errors.password}
           {...register("password", {
@@ -119,7 +133,44 @@ const Login = () => {
               {errors.password?.message}
             </Typography>
           }
-        />
+        /> */}
+        <FormControl
+          variant="standard"
+          fullWidth
+          error={!!errors.password} // Apply error state to the FormControl
+        >
+          <InputLabel htmlFor="standard-adornment-password">
+            Password
+          </InputLabel>
+          <Input
+            {...register("password", {
+              required: "This field is required",
+              minLength: {
+                value: 5,
+                message: "Password must be at least 5 characters long",
+              },
+            })}
+            sx={{ marginBottom: "20px" }}
+            id="standard-adornment-password"
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+          <FormHelperText>
+            <Typography color="error" component="span">
+              {errors.password?.message}
+            </Typography>
+          </FormHelperText>
+        </FormControl>
 
         <Box sx={{ marginTop: "20px" }}>
           <Typography variant="body2" className="flex gap-1">

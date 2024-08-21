@@ -5,7 +5,13 @@
       "email": "john.doe@example.com",
       "password": "password123",
       "name": "John Doe",
-      "card": []
+      "card": [
+        {
+          "id": "471a9476-025f-4934-ac7a-b619717a38ca",
+          "name": "dfafd",
+          "price": "33"
+        }
+      ]
     },
     {
       "id": "fd852",
@@ -21,19 +27,9 @@
       "name": "Omar Ehab",
       "card": [
         {
-          "id": "fc84235a-1fc8-40f0-8d03-955f3547425b",
-          "name": "fads",
-          "price": "445"
-        },
-        {
-          "id": "633f034d-836d-46b5-a197-1574d80623ef",
-          "name": "fda",
-          "price": "511"
-        },
-        {
-          "id": "e876de82-0376-4d5e-942a-299b6c4796dc",
-          "name": "daf",
-          "price": "44"
+          "id": "50b416fb-9f71-4155-a3a8-0c53cbf647c5",
+          "name": "omar55",
+          "price": "5555"
         }
       ]
     }

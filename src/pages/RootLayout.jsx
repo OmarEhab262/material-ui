@@ -2,17 +2,35 @@ import { Outlet } from "react-router-dom";
 import { Box, createTheme, ThemeProvider } from "@mui/material";
 import { brown } from "@mui/material/colors";
 import CssBaseline from "@mui/material/CssBaseline";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DrawerComponent from "../components/Drawer";
 import Nav from "../components/Nav";
 import ScrollToTop from "../components/ScrollToTop";
 
 const RootLayout = () => {
   const [open, setOpen] = useState(false);
-  const [triggerMode, setTriggerMode] = useState(
-    localStorage.getItem("mode") || "light"
-  );
 
+  // Function to determine the initial mode based on user's preference or localStorage
+  const getInitialMode = () => {
+    const savedMode = localStorage.getItem("mode");
+    if (savedMode) {
+      return savedMode;
+    } else {
+      const prefersDarkMode = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      return prefersDarkMode ? "dark" : "light";
+    }
+  };
+
+  const [triggerMode, setTriggerMode] = useState(getInitialMode);
+
+  useEffect(() => {
+    // Save mode to localStorage whenever it changes
+    localStorage.setItem("mode", triggerMode);
+  }, [triggerMode]);
+
+  // Creating the theme based on the mode
   const darkTheme = createTheme({
     palette: {
       mode: triggerMode,
